@@ -12,7 +12,6 @@ except ImportError:
     from django.db import connection
     connections = {'default': connection}
 
-from django.db.backends import util
 from django.conf import settings as django_settings
 #from django.template import Node
 
@@ -51,6 +50,10 @@ except ImportError:
     debug_toolbar = False
     import django
     version = float('.'.join([str(x) for x in django.VERSION[:2]]))
+    if version >= 1.7:
+        from django.db.backends import utils as util
+    else:
+        from django.db.backends import util
     if version >= 1.6:
         DatabaseStatTracker = util.CursorWrapper
     else:
